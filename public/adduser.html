@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add user</title>
+    <style>
+        body {
+            min-width: 320px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type=text],
+        select,
+        textarea,
+        button,
+        .btn {
+            padding: 10px;
+            border: 2px solid lightgray;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            background: #fcfcfc;
+        }
+
+        button,
+        .btn {
+            background: #cccccc;
+            text-decoration: none;
+            display: block;
+            color: black;
+            text-align: center;
+            font-size: 0.8rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn:hover,
+        .btn:active,
+        button:hover,
+        button:active {
+            opacity: 0.7;
+        }
+
+        .container {
+            min-width: 300px;
+            width: 50%;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 0 10px;
+            }
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .login {
+            margin-right: 10px;
+        }
+
+        .adduser {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Add User</h1>
+    <form action="" class="adduser">
+        <label for="login">Login</label>
+        <input type="text" id="login" required>
+        <label for="password">Password</label>
+        <input type="text" id="password" required>
+        <button type="submit" class="adduser__btn">Add</button>
+        <p class="adduser__status"></p>
+    </form>
+</div>
+<script>
+    (()=> {
+        const btn = document.querySelector('.adduser__btn');
+        const form = document.querySelector('.adduser');
+        const status = document.querySelector('.adduser__status');
+
+        if (!btn && !form && !status) {
+            return;
+        }
+
+        form.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+
+            const login = form.querySelector('#login').value;
+            const password = form.querySelector('#password').value;
+            const url = '/adduser';
+
+            const postData = {
+                login,
+                password
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData),
+            })
+                .then(res => res.json())
+                .then((res) => {
+                    if (res._id) {
+                        window.location.href = "/login"
+                    } else {
+                        status.textContent = res
+                    }
+                })
+                .catch((err)=>{
+                    status.textContent = err;
+                });
+        })
+
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+doctype html
+html
+    head
+        meta(name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0")
+        meta(charset="UTF-8")
+        title Document
+        style.
+            body {
+                min-width: 320px;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .container {
+                min-width: 300px;
+                width: 50%;
+                margin: 0 auto;
+            }
+
+            .wrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .users {
+                display: flex;
+                flex-direction: column;
+                list-style: none;
+                padding: 0;
+            }
+
+            .user {
+                border-bottom: 1px solid gray;
+                padding: 0 0 10px 0;
+                display: flex;
+            }
+
+            .user:first-child {
+                background-color: #cccccc;
+            }
+
+            .user span {
+                padding: 5px;
+                width: 50%;
+            }
+
+    body
+        div.container
+            div.wrapper
+                h1 Users
+                if login
+                    div
+                        span.login #{login}
+                        a(href="/logout") Logout
+                else
+                    a(href="/login") Login
+            ul.users
+                li.user
+                    span login
+                    span password
+                if users
+                    each user in users
+                        li.user
+                            span #{user.login}
+                            span #{user.password}
+                else
+                    p No users yet
